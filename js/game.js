@@ -4,20 +4,11 @@ var levels = [
     "{1 -- 2 ; 1 -- 3 ; 1 -- 4 ; 1 -- 5 ;  }",
 ];
 
-// create a network
 var container = document.getElementById('playfield');
-var data = {
-    dot: levels[1]
-};
-var options = {
-    zoomable: false,
-    nodes: {
-        color: "#ccc"
-    }
-};
 
-var network = new vis.Network(container, data, options);
-
-network.on("click", function(e) {
-    var clickedNode = e.nodes[0];
-})
+var level = new Level({ number: 1 }).load("{1 -- 2 ; 1 -- 3}");
+var levelView = new LevelView({
+    el: container,
+    model: level
+});
+levelView.render();

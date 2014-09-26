@@ -1,4 +1,9 @@
+html {
+    background: #111;
+    color: #aaa;
+}
+
 #playfield {
-    border: 1px solid silver;
+    border: 1px solid #666;
     height: 500px;
 }
