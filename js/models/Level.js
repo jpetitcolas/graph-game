@@ -2,14 +2,24 @@ var Level = Backbone.Model.extend({
     number: 1,
     nodes: null,
 
-    load: function(dotSchema) {
-        var parsedSchema = vis.network.dotparser.parseDOT(dotSchema);
+    initialize: function() {
+        this.set("nodes", new NodeCollection());
+        this.get("nodes").bind("change", function(model) {
+            this.trigger("change", { model: model });
+        }, this);
+    },
 
-        var nodes = new NodeCollection();
+    load: function(dotSchema) {
+        var nodes = [];
+        var parsedSchema = vis.network.dotparser.parseDOT(dotSchema);
         parsedSchema.nodes.forEach(function(visNode) {
-            nodes.add(new Node(visNode));
+            nodes.push(new Node(visNode));
         });
-        this.set("nodes", nodes);
+
+        // Consider first node as main.
+        nodes[0].set("main", true);
+
+        this.get("nodes").add(nodes);
 
         var me = this;
         parsedSchema.edges.forEach(function(edge) {

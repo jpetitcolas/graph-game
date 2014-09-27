@@ -26,5 +26,9 @@ var Node = Backbone.Model.extend({
         }
 
         return true;
+    },
+
+    toggleSwitch: function() {
+        this.set("switchedOn", !this.get("switchedOn"));
     }
 });
