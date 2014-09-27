@@ -6,6 +6,10 @@ var Level = Backbone.Model.extend({
         this.set("nodes", new NodeCollection());
         this.get("nodes").bind("change", function(model) {
             this.trigger("change", { model: model });
+
+            if (this.isFinished()) {
+                this.trigger("finished");
+            }
         }, this);
     },
 
@@ -30,5 +34,11 @@ var Level = Backbone.Model.extend({
         });
 
         return this;
+    },
+
+    isFinished: function() {
+        return this.get("nodes").reduce(function(isFinished, node) {
+            return isFinished && node.get("switchedOn");
+        }, true);
     }
 });

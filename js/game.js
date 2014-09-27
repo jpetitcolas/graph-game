@@ -6,9 +6,20 @@ var levels = [
 
 var container = document.getElementById('playfield');
 
-var level = new Level({ number: 1 }).load("{1 -- 2 ; 1 -- 3}");
-var levelView = new LevelView({
-    el: container,
-    model: level
-});
-levelView.render();
+var currentLevel = 0;
+
+function startLevel() {
+    var level = new Level({ number: currentLevel }).load(levels[currentLevel]);
+    var levelView = new LevelView({
+        el: container,
+        model: level
+    });
+    levelView.render();
+
+    level.on("finished", function() {
+        currentLevel++;
+        startLevel();
+    });
+}
+
+startLevel();
