@@ -1,6 +1,8 @@
 var LevelView = Backbone.View.extend({
     network: null,
 
+    infoView: null,
+
     initialize: function() {
         _.bindAll(this, 'onClick', 'onNodeChange');
         this.model.on("change", this.onNodeChange);
@@ -40,6 +42,11 @@ var LevelView = Backbone.View.extend({
         this.network.on("blurNode", function () {
             document.body.style.cursor = "default";
         });
+
+        this.infoView = new InfoView({
+            model: this.model,
+            el: $("#infos")
+        }).render();
     },
 
     onClick: function(e) {
@@ -50,8 +57,12 @@ var LevelView = Backbone.View.extend({
         var clickedId = parseInt(e.nodes[0]);
         var clickedNode = this.model.get("nodes").where({ id: clickedId })[0];
 
-        if (clickedNode.isSwitchable()) {
-            clickedNode.toggleSwitch();
+        if (clickedNode.get("switchedOn")) {
+            clickedNode.switchOff();
+        } else {
+            if (clickedNode.isSwitchableOn() && this.model.canSwitchOnNewNode()) {
+                clickedNode.switchOn();
+            }
         }
     },
 

@@ -9,13 +9,19 @@
     <h1>Graph game</h1>
     <h2>Rules:</h2>
     <ul>
-        <li>Your goal is to light on the main node, symbolized with the orange border.</li>
+        <!--<li>Your goal is to light on the main node, symbolized with the orange border.</li>
         <li>You can only switch on a node if all its children are lighted on.</li>
         <li>You can't light on more nodes than given limit, displayed on top right corner.</li>
         <li>When a node is switched on, you can switch off its children without switching off current node.</li>
-        <li>A node can be switched on only once.</li>
+        <li>A node can be switched on only once.</li>-->
     </ul>
-    <div id="playfield"></div>
+    <div id="playfield">
+        <div id="infos">
+            <p id="numberLevel">Level <span>1</span></p>
+            <p id="switchedOnNodes">Switched on nodes: <span>1/2</span></p>
+        </div>
+        <div id="canvas"></div>
+    </div>
     <script src="bower_components/vis/dist/vis.min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -26,6 +32,7 @@
     <script src="js/models/Node.js"></script>
     <script src="js/models/NodeCollection.js"></script>
 
+    <script src="js/views/InfoView.js"></script>
     <script src="js/views/LevelView.js"></script>
 
     <script src="js/game.js"></script>

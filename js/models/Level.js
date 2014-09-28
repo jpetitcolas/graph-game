@@ -1,9 +1,13 @@
 var Level = Backbone.Model.extend({
-    number: 1,
-    nodes: null,
+    defaults: {
+        number: 1,
+        nodes: null,
+        maximumSwitchedOnNodes: 0
+    },
 
     initialize: function() {
         this.set("nodes", new NodeCollection());
+
         this.get("nodes").bind("change", function(model) {
             this.trigger("change", { model: model });
 
@@ -13,9 +17,9 @@ var Level = Backbone.Model.extend({
         }, this);
     },
 
-    load: function(dotSchema) {
+    load: function(level) {
         var nodes = [];
-        var parsedSchema = vis.network.dotparser.parseDOT(dotSchema);
+        var parsedSchema = vis.network.dotparser.parseDOT(level.nodes);
         parsedSchema.nodes.forEach(function(visNode) {
             nodes.push(new Node(visNode));
         });
@@ -33,6 +37,8 @@ var Level = Backbone.Model.extend({
             fromNode.addChild(nextNode);
         });
 
+        this.set("maximumSwitchedOnNodes", level.maximumSwitchedOnNodes);
+
         return this;
     },
 
@@ -40,5 +46,17 @@ var Level = Backbone.Model.extend({
         return this.get("nodes").reduce(function(isFinished, node) {
             return isFinished && node.get("switchedOn");
         }, true);
+    },
+
+    canSwitchOnNewNode: function() {
+        var maximumNodes = this.get("maximumSwitchedOnNodes");
+
+        return maximumNodes == 0 || this.getNumberSwitchedOnNodes() < maximumNodes;
+    },
+
+    getNumberSwitchedOnNodes: function() {
+        return this.get("nodes").filter(function(node) {
+            return node.get("switchedOn");
+        }).length;
     }
 });

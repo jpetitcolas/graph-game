@@ -6,4 +6,16 @@ html {
 #playfield {
     border: 1px solid #666;
     height: 500px;
+    position: relative;
+}
+
+#infos {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.danger {
+    color: red;
+    font-weight: bold;
 }
