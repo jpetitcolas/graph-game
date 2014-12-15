@@ -15,12 +15,13 @@ var LevelView = Backbone.View.extend({
             preparedNodes.push(me.toVisNode(node));
             node.get("children").each(function(child) {
                 preparedEdges.push({
-                    from: node.get("id"),
-                    to: child.get("id"),
+                    from: child.get("id"),
+                    to: node.get("id"),
                     width: 1,
                     hoverWidth: 1,
                     widthSelectionMultiplier: 1,
-                    color: "gray"
+                    color: "gray",
+                    style: "arrow-center"
                 });
             });
         });

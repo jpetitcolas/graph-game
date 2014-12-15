@@ -3,7 +3,8 @@ var Node = Backbone.Model.extend({
         main: false,
         switchedOn: false,
         parents: null,
-        children: null
+        children: null,
+        alreadySwitchedOn: false
     },
 
     initialize: function() {
@@ -19,6 +20,10 @@ var Node = Backbone.Model.extend({
     },
 
     isSwitchableOn: function() {
+        if (this.get("alreadySwitchedOn")) {
+            return false;
+        }
+
         var children = this.get("children");
         for (i = 0, c = children.length ; i < c ; i++) {
             if (!children.at(i).get("switchedOn")) {
@@ -31,6 +36,7 @@ var Node = Backbone.Model.extend({
 
     switchOn: function() {
         this.set("switchedOn", true);
+        this.set("alreadySwitchedOn", true);
     },
 
     switchOff: function() {
