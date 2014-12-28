@@ -20,8 +20,14 @@ var Level = Backbone.Model.extend({
     load: function(level) {
         var nodes = [];
         var parsedSchema = vis.network.dotparser.parseDOT(level.nodes);
+
+        var unswitchableOffNodeIds = level.unswitchableOff || [];
         parsedSchema.nodes.forEach(function(visNode) {
-            nodes.push(new Node(visNode));
+            var node = new Node(visNode);
+            if (unswitchableOffNodeIds.indexOf(visNode.id) != -1) {
+                node.set('unswitchableOff', true);
+            }
+            nodes.push(node);
         });
 
         // Consider first node as main.

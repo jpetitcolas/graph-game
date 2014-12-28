@@ -59,7 +59,9 @@ var LevelView = Backbone.View.extend({
         var clickedNode = this.model.get("nodes").where({ id: clickedId })[0];
 
         if (clickedNode.get("switchedOn")) {
-            clickedNode.switchOff();
+            if (clickedNode.isSwitchableOff()) {
+                clickedNode.switchOff();
+            }
         } else {
             if (clickedNode.isSwitchableOn() && this.model.canSwitchOnNewNode()) {
                 clickedNode.switchOn();
@@ -72,11 +74,18 @@ var LevelView = Backbone.View.extend({
     },
 
     toVisNode: function(node) {
+        var borderColor = '#555';
+        if (node.get('main')) {
+            borderColor = 'orange';
+        } else if (node.get('unswitchableOff')) {
+            borderColor = 'blue';
+        }
+
         return {
             id: node.get("id"),
             color: {
                 background: node.get("switchedOn") ? "yellow": "silver",
-                border: node.get("main") ? "orange" : "#555"
+                border: borderColor
             },
             borderWidth: 3,
             borderWidthSelected: 3,

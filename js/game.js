@@ -10,7 +10,7 @@ var levels = [
     { nodes: "{ 1 -> 2 ; 2 -> 4 ; 1 -> 3 ; 3 -> 5 ; 3 -> 6 ; 5 -> 7 ; 5 -> 8 ; 9 -> 8 ; 6 -> 9 }", maximumSwitchedOnNodes: 3},
     { nodes: "{ 1 -> 2 ; 1 -> 5 ; 1 -> 3 ; 2 -> 4 ; 2 -> 5 ; 3 -> 6 ; 3 -> 9 ; 3 -> 12 ; 5 -> 4 ; 5 -> 6 ; 4 -> 7 ; 7 -> 10 ; " +
              " 10 -> 13 ; 10 -> 14 ; 13 -> 16 ; 14 -> 16 ; 16 -> 19 ; 14 -> 17 ; 17 -> 19 ; 6 -> 8 ; 8 -> 11 ; 11 -> 15 ;" +
-             " 15 -> 17 ; 15 -> 18 ; 11 -> 12 ; 12 -> 18 ; 9 -> 12 }", maximumSwitchedOnNodes: 5}
+             " 15 -> 17 ; 15 -> 18 ; 11 -> 12 ; 12 -> 18 ; 9 -> 12 }", maximumSwitchedOnNodes: 5, unswitchableOff: [18] }
 ];
 
 var container = document.getElementById('canvas');
